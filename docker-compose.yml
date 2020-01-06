@@ -8,6 +8,8 @@ services:
     image: php:7.3-fpm
     container_name: app
     working_dir: /var/www
+    env_file:
+      - .application
     volumes:
       - ./src:/var/www
       - ./build/php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -31,10 +33,13 @@ services:
     container_name: db
     ports:
       - 3306:3306
+    expose:
+      - 3306
     volumes:
       - dbdata:/var/lib/mysql
       - ./build/mysql/my.cnf:/etc/mysql/my.cnf
     env_file:
+      - .application
       - .env
     networks:
       - app-network
