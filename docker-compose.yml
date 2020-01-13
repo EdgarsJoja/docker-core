@@ -9,11 +9,10 @@ services:
     container_name: app
     working_dir: /var/www
     env_file:
-      - .application
+      - .env
     volumes:
       - ./src:/var/www
       - ./build/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    command: composer install
     networks:
       - app-network
 
@@ -40,7 +39,6 @@ services:
       - dbdata:/var/lib/mysql
       - ./build/mysql/my.cnf:/etc/mysql/my.cnf
     env_file:
-      - .application
       - .env
     networks:
       - app-network
