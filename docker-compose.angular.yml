@@ -7,11 +7,11 @@ services:
       dockerfile: Dockerfile
     image: node:lts-alpine
     container_name: node
-    working_dir: /app-dir
+    working_dir: /app/app-dir
     ports:
     - 4200:4200
     volumes:
-      - ./src/public/angular:/app-dir
+      - ./src/public/angular:/app/app-dir
     networks:
       - app-network
 
