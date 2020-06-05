@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    ports:
+      - 1080:80
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
