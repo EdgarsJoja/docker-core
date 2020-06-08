@@ -3,7 +3,7 @@ version: '3'
 services:
   node:
     build:
-      context: ./src/public/angular
+      context: ./src/frontend
       dockerfile: Dockerfile
     image: node:lts-alpine
     container_name: node
@@ -11,7 +11,7 @@ services:
     ports:
     - 4200:4200
     volumes:
-      - ./src/public/angular:/app/app-dir
+      - ./src/frontend:/app/app-dir
     networks:
       - app-network
 

@@ -33,11 +33,16 @@ RUN docker-php-ext-install gd
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+RUN groupadd -g 1000 www; exit 0
+# Force successful exit, in case user already exists. Need to improve this.
+RUN useradd -u 1000 -ms /bin/bash -g www www; exit 0
 
 # Copy existing application directory contents
 COPY . /var/www
+
+# Copy startup script
+COPY ./start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
@@ -47,4 +52,5 @@ USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
+# @todo: Add wait-for-it until mysql is running, to be able to execute laravel migrations on startup
+CMD ["/start.sh"]

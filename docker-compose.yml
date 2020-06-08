@@ -11,8 +11,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./src:/var/www
-      - ./build/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./src/backend:/var/www
+      - ./deploy/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
 
@@ -23,8 +23,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./src:/var/www
-      - ./build/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./src/backend:/var/www
+      - ./deploy/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
 
@@ -37,7 +37,7 @@ services:
       - 3306
     volumes:
       - dbdata:/var/lib/mysql
-      - ./build/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./deploy/mysql/my.cnf:/etc/mysql/my.cnf
     env_file:
       - .env
     networks:
@@ -50,7 +50,7 @@ services:
       - app
     command: daemon --config=/etc/ofelia/config.ini
     volumes:
-      - ./build/ofelia/config.ini:/etc/ofelia/config.ini
+      - ./deploy/ofelia/config.ini:/etc/ofelia/config.ini
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
