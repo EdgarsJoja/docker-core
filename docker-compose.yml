@@ -8,6 +8,7 @@ services:
     image: php:7.3-fpm
     container_name: app
     working_dir: /var/www
+    command: ["/wait-for-it.sh", "db:3306", "--", "/start.sh"]
     env_file:
       - .env
     volumes:

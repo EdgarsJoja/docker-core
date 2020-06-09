@@ -40,6 +40,10 @@ RUN useradd -u 1000 -ms /bin/bash -g www www; exit 0
 # Copy existing application directory contents
 COPY . /var/www
 
+# Copy wait-for-it script
+COPY ./wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 # Copy startup script
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
@@ -50,7 +54,7 @@ COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
 
-# Expose port 9000 and start php-fpm server
+# Expose port 9000 and run startup script
 EXPOSE 9000
-# @todo: Add wait-for-it until mysql is running, to be able to execute laravel migrations on startup
+
 CMD ["/start.sh"]
