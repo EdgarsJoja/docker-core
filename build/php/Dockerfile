@@ -1,7 +1,9 @@
 FROM php:7.3-fpm
 
+ARG API_DIR_PATH=/var/www
+
 # Set working directory
-WORKDIR /var/www
+WORKDIR $API_DIR_PATH
 
 USER root
 
@@ -38,7 +40,7 @@ RUN groupadd -g 1000 www; exit 0
 RUN useradd -u 1000 -ms /bin/bash -g www www; exit 0
 
 # Copy existing application directory contents
-COPY . /var/www
+COPY . $API_DIR_PATH
 
 # Copy wait-for-it script
 COPY ./wait-for-it.sh /wait-for-it.sh
@@ -49,7 +51,7 @@ COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
+COPY --chown=www:www . $API_DIR_PATH
 
 # Change current user to www
 USER www

@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  app:
+    volumes:
+      - ./src/backend:/var/www/api
+
+  server:
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./src/backend:/var/www/api
+      - ./deploy/nginx/conf.d/local:/etc/nginx/conf.d/
+
   maildev:
     image: maildev/maildev
     container_name: maildev
